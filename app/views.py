@@ -1,7 +1,9 @@
 from app import app
 from flask import render_template, request, make_response, jsonify
 import requests
-import json
+import datetime
+
+my_api_key = 'c34143464249e4b2c000f1a05e5172c7'
 
 
 @app.route('/', defaults={'path': ''})
@@ -12,22 +14,18 @@ def index(path):
 
 @app.route('/', methods=['GET'])
 def current_day():
-    my_api_key = 'c34143464249e4b2c000f1a05e5172c7'
     city = 'Montego Bay'
-
-    apikey_ = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid={}'.format(city, my_api_key)
-    response = requests.get(apikey_)
+    apiurl = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid={}'.format(city, my_api_key)
+    response = requests.get(apiurl)
 
     return response.json()
 
 
 @app.route('/five_day_forecast', methods=['GET'])
 def five_day():
-    myapikey = 'c34143464249e4b2c000f1a05e5172c7'
-    citi = 'Kingston'
-
-    apikey_ = 'https://api.openweathermap.org/data/2.5/forecast?q={}&appid={}'.format(citi, myapikey)
-    responser = requests.get(apikey_)
+    city = 'Kingston'
+    apiurl = 'https://api.openweathermap.org/data/2.5/forecast?q={}&appid={}'.format(city, my_api_key)
+    responser = requests.get(apiurl)
 
     return responser.json()
 
@@ -45,6 +43,10 @@ def form_errors(form):
     return error_messages
 
 
+
+
+
+
 @app.after_request
 def add_header(response):
     """
@@ -60,7 +62,7 @@ def add_header(response):
 @app.errorhandler(404)
 def page_not_found(error):
     """Custom 404 page."""
-    return make_response(jsonify({ 'error' : 'Not Found' }), 404)
+    return make_response(jsonify({'error': 'Not Found' }), 404)
 
 
 if __name__ == '__main__':
