@@ -1,0 +1,58 @@
+[
+	{
+		"parish": "Kingston",
+		"capital": "Kingston"
+	},
+	{
+		"parish": "St. Andrew ",
+		"capital": "Half-way-Tree"
+	},
+	{
+		"parish": "Hanover",
+		"capital": "Lucea"
+	},
+	{
+		"parish": "St. Elizabeth",
+		"capital": "Black River"
+	},
+	{
+		"parish": "St. James",
+		"capital": "Mantego Bay"
+	},
+	{
+		"parish": "Trelawny",
+		"capital": "Falmouth"
+	},
+	{
+		"parish": "Westmoreland",
+		"capital": "Savanna-la-Mar"
+	},
+	{
+		"parish": "Clarendon",
+		"capital": "May Pen"
+	},
+	{
+		"parish": "Manchester",
+		"capital": "Mandeville"
+	},
+	{
+		"parish": "St. Ann",
+		"capital": "St. Ann's Bay"
+	},
+	{
+		"parish": "St. Catherine",
+		"capital": "Spanish Town"
+	},
+	{
+		"parish": "St. Mary",
+		"capital": "Port Maria"
+	},
+	{
+		"parish": "Portland",
+		"capital": "Port Antonio"
+	},
+	{
+	"parish": "St. Thomas",
+	"capital": "Morant Bay"
+	}
+]

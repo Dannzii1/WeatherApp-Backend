@@ -1,6 +1,7 @@
 from app import app
 from flask import make_response, jsonify
 import requests
+import json
 
 
 my_api_key = 'c34143464249e4b2c000f1a05e5172c7'
@@ -12,13 +13,19 @@ def index(path):
     return None
 
 
-def get_city(city):
-    city_list=[]
+def get_city():
+    city_list = dict()
+    with open("./app/data/jamaicancities.json", "r") as cities:
+        city_list["Jamaica's Parishes"] = json.load(cities)
+        get_parish = city_list["Jamaica's Parishes"][0]["parish"]
+    return get_parish
+
+
+city = get_city()
 
 
 @app.route('/', methods=['GET'])
 def current_day():
-    city = 'Montego Bay'
     api_url = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid={}'.format(city, my_api_key)
     response = requests.get(api_url).json()
 
@@ -27,7 +34,6 @@ def current_day():
 
 @app.route('/five_day_forecast', methods=['GET'])
 def five_day():
-    city = 'Kingston'
     api_url = 'https://api.openweathermap.org/data/2.5/forecast?q={}&appid={}'.format(city, my_api_key)
     response = requests.get(api_url).json()
 
