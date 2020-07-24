@@ -13,13 +13,15 @@ def index(path):
     return None
 
 
+
 def get_city():
     city_list = dict()
     with open("./app/data/jamaicancities.json", "r") as cities:
         city_list["Jamaica's Parishes"] = json.load(cities)
-        get_parish = city_list["Jamaica's Parishes"][0]["parish"]
-    return get_parish
-
+        get_parish = city_list.values()
+    for parish_list in get_parish:
+        for parish in parish_list:
+            return parish["parish"]
 
 city = get_city()
 
