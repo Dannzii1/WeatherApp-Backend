@@ -4,41 +4,43 @@ import requests
 import json
 
 
-my_api_key = 'c34143464249e4b2c000f1a05e5172c7'
-
-
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def index(path):
     return None
 
 
-
-def get_city():
-    city_list = dict()
+@app.route('/get_parishes', methods=['GET'])
+def get_parishes():
     with open("./app/data/jamaicancities.json", "r") as cities:
-        city_list["Jamaica's Parishes"] = json.load(cities)
-        get_parish = city_list.values()
-    for parish_list in get_parish:
-        for parish in parish_list:
-            return parish["parish"]
+        parishes = []
+        for parish_list in json.load(cities):
+            parishes.append(parish_list['parish'])
 
-city = get_city()
+        return parishes
+
+
+def choose_parishes(parish_name):
+    for parish in get_parishes():
+        if parish_name in parish:
+
+            return parish_name
+
+
+city = choose_parishes('Kingston')
 
 
 @app.route('/', methods=['GET'])
 def current_day():
-    api_url = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid={}'.format(city, my_api_key)
+    api_url = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid={}'.format(city, app.config['SECRET_KEY'])
     response = requests.get(api_url).json()
-
     return response
 
 
 @app.route('/five_day_forecast', methods=['GET'])
 def five_day():
-    api_url = 'https://api.openweathermap.org/data/2.5/forecast?q={}&appid={}'.format(city, my_api_key)
+    api_url = 'https://api.openweathermap.org/data/2.5/forecast?q={}&appid={}'.format(city, app.config['SECRET_KEY'])
     response = requests.get(api_url).json()
-
     return response
 
 
@@ -48,7 +50,6 @@ five_day_forecast = five_day()
 
 @app.route('/temp/<int:day>', methods=['GET'])
 def get_temp(day):
-
     result = dict()
 
     if day == 1:
@@ -104,9 +105,9 @@ def form_errors(form):
     for field, errors in form.errors.items():
         for error in errors:
             message = u"Error in the %s field - %s" % (
-                    getattr(form, field).label.text,
-                    error
-                )
+                getattr(form, field).label.text,
+                error
+            )
             error_messages.append(message)
     return error_messages
 
